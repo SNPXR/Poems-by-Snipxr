@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="POEMS by snipxr, a digital poetry book.">
+<title>POEMS — by snipxr</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%AA%B6%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400&display=swap">
+<style>
+:root{--bg:#f5eee2;--ink:#2a2420;--mute:#8d8173;--accent:#a8552f;--card:#fbf6ec;--line:rgba(120,95,70,.22);--g1:rgba(230,185,138,.55);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1117;--ink:#ece6da;--mute:#8f8c97;--accent:#e0a878;--card:#171a22;--line:rgba(255,255,255,.1);--g1:rgba(90,70,160,.45)}}
+:root[data-theme="dark"]{--bg:#0f1117;--ink:#ece6da;--mute:#8f8c97;--accent:#e0a878;--card:#171a22;--line:rgba(255,255,255,.1);--g1:rgba(90,70,160,.45)}
+body.night{--bg:#060818;--ink:#e8e5f8;--mute:#8a88b0;--accent:#b7a6ff;--card:#0d1030;--line:rgba(180,170,255,.16);--g1:rgba(60,50,170,.5)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Cormorant Garamond',Georgia,serif;font-size:20px;line-height:1.6;min-height:100vh;overflow-x:hidden;transition:background .9s,color .6s}
+#aura{position:fixed;left:50%;top:-30vmax;width:90vmax;height:90vmax;margin-left:-45vmax;border-radius:50%;background:radial-gradient(circle,var(--g1),transparent 62%);pointer-events:none;z-index:0;animation:sway 30s ease-in-out infinite alternate;will-change:transform}
+@keyframes sway{to{transform:translate3d(14vw,10vh,0) scale(1.15)}}
+#glow{position:fixed;left:0;top:0;width:360px;height:360px;margin:-180px;border-radius:50%;pointer-events:none;z-index:1;background:radial-gradient(circle,var(--accent),transparent 65%);opacity:.12;will-change:transform}
+canvas#amb{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:2}
+#bar{position:fixed;top:0;left:0;height:2px;width:100%;background:var(--accent);z-index:20;transform:scaleX(0);transform-origin:0 50%}
+nav{position:fixed;top:0;left:0;right:0;z-index:15;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:calc(12px + env(safe-area-inset-top,0px)) 18px 22px;background:linear-gradient(var(--bg) 55%,transparent);font-family:Inter,system-ui,sans-serif}
+#brand{font-family:Cinzel,Georgia,serif;letter-spacing:.32em;font-size:13px;cursor:pointer;white-space:nowrap}
+#brand i{color:var(--accent);font-style:normal}
+.tools{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+button{font-family:Inter,system-ui,sans-serif;font-size:12px;letter-spacing:.05em;background:var(--card);color:var(--mute);border:1px solid var(--line);border-radius:20px;padding:7px 14px;cursor:pointer;transition:color .2s,border-color .2s,transform .2s}
+button:hover{color:var(--accent);border-color:var(--accent);transform:translateY(-1px)}
+button.pri{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+#app{position:relative;z-index:3;transition:opacity .16s,transform .16s}
+#app.out{opacity:0;transform:translateY(8px)}
+main{max-width:980px;margin:0 auto;padding:90px 22px 90px}
+.hero{min-height:80vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.hero h1{font-family:Cinzel,Georgia,serif;font-weight:400;font-size:clamp(46px,13vw,116px);letter-spacing:.2em;margin:0 -.2em 0 0;user-select:none;cursor:default}
+.hero h1 span{display:inline-block;opacity:0;transform:translateY(24px);animation:in .7s cubic-bezier(.2,.8,.2,1) forwards;animation-delay:calc(var(--i)*.06s + .05s)}
+@keyframes in{to{opacity:1;transform:none}}
+.hero p{font-style:italic;font-size:24px;color:var(--mute);margin:10px 0 0;opacity:0;animation:in .8s .5s forwards}
+.cue{margin-top:50px;font-family:Inter,sans-serif;font-size:11px;letter-spacing:.35em;text-transform:uppercase;color:var(--accent);cursor:pointer;animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(7px)}}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 26px;justify-content:center}
+.chip.on{color:var(--bg);background:var(--accent);border-color:var(--accent)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.card{position:relative;overflow:hidden;padding:26px 24px;border:1px solid var(--line);border-radius:16px;background:var(--card);cursor:pointer;transition:transform .3s cubic-bezier(.2,.8,.2,1),border-color .3s,box-shadow .3s;opacity:0;animation:in .6s forwards;animation-delay:calc(var(--i)*.05s)}
+.card:hover{transform:translateY(-6px);border-color:var(--accent);box-shadow:0 14px 36px -18px var(--accent)}
+.card b{position:absolute;right:16px;top:-6px;font-family:Cinzel,serif;font-weight:400;font-size:84px;color:var(--accent);opacity:.12;transition:opacity .3s}
+.card:hover b{opacity:.28}
+.card small{font-family:Inter,sans-serif;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--accent)}
+.card h4{font-family:Cinzel,serif;font-weight:400;font-size:21px;letter-spacing:.05em;margin:10px 0 8px}
+.card p{margin:0;font-style:italic;color:var(--mute);font-size:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.poem{max-width:640px;margin:0 auto;text-align:center}
+.poem>small{font-family:Inter,sans-serif;font-size:11px;letter-spacing:.35em;text-transform:uppercase;color:var(--accent)}
+.poem h2{font-family:Cinzel,Georgia,serif;font-weight:400;font-size:clamp(30px,7vw,52px);letter-spacing:.1em;margin:14px 0 6px;line-height:1.2;cursor:default}
+.poem h2 span{display:inline-block;transition:transform .8s cubic-bezier(.34,1.56,.64,1)}
+.orn{color:var(--accent);letter-spacing:1em;margin:20px 0 36px;opacity:.7}
+.ln{display:block;min-height:1.2em;font-size:clamp(21px,4.6vw,27px);line-height:1.95;opacity:0;transform:translateY(8px);animation:in .7s forwards;animation-delay:calc(var(--i)*.1s + .1s)}
+.pn{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:70px;text-align:left}
+.pn div{padding:16px;border:1px solid var(--line);border-radius:14px;background:var(--card);cursor:pointer;transition:border-color .25s,transform .25s}
+.pn div:hover{border-color:var(--accent);transform:translateY(-3px)}
+.pn div:last-child{text-align:right}
+.pn small{display:block;color:var(--mute);font-family:Inter,sans-serif;font-size:11px;letter-spacing:.12em}
+.pn span{font-family:Cinzel,serif;font-size:16px}
+footer{text-align:center;color:var(--mute);font-size:15px;margin-top:70px;font-style:italic}
+footer i{cursor:pointer;font-style:normal;color:var(--accent);font-size:22px;display:inline-block;transition:transform .3s}
+footer i:hover{transform:rotate(90deg) scale(1.3)}
+.empty{text-align:center;color:var(--mute);font-style:italic;font-size:22px;padding:50px 0}
+.ed{max-width:680px;margin:0 auto}
+.ed label{display:block;font-family:Inter,sans-serif;font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--mute);margin:20px 0 7px}
+.ed input[type=text],.ed textarea{width:100%;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:13px 15px;font:inherit;font-size:20px;outline:none;transition:border-color .2s}
+.ed input:focus,.ed textarea:focus{border-color:var(--accent)}
+.ed textarea{min-height:48vh;line-height:1.8;resize:vertical}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:16px 0}
+.item{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 16px;background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:9px}
+.item small{font-family:Inter,sans-serif;font-size:10px;letter-spacing:.15em;color:var(--mute);text-transform:uppercase}
+.banner{font-family:Inter,sans-serif;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);text-align:center}
+#whisper{position:fixed;left:50%;top:44%;transform:translate(-50%,-46%);z-index:30;width:86vw;max-width:700px;text-align:center;font-size:clamp(24px,5vw,38px);font-style:italic;color:var(--ink);opacity:0;pointer-events:none;transition:opacity .9s,transform 1.4s;text-shadow:0 0 24px var(--bg),0 0 6px var(--bg)}
+#whisper.on{opacity:1;transform:translate(-50%,-50%)}
+.sg{font:italic 400 100px 'Cormorant Garamond',Georgia,serif;fill:transparent;stroke:var(--accent);stroke-width:1.4;stroke-dasharray:520;stroke-dashoffset:520;animation:dr 2.2s ease forwards,fl 1s 2s forwards}
+@keyframes dr{to{stroke-dashoffset:0}}@keyframes fl{to{fill:var(--accent)}}
+#fx{position:fixed;inset:0;pointer-events:none;z-index:25;overflow:hidden}
+.wisp{position:absolute;width:16px;height:16px;border-radius:50%;pointer-events:auto;cursor:pointer;background:radial-gradient(circle,#fff,var(--accent) 45%,transparent 70%);box-shadow:0 0 18px 6px var(--accent);transition:transform 7s ease-in-out;animation:pulse 1.4s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.45}}
+.moon{position:fixed;left:50%;top:14vh;margin-left:-55px;width:110px;height:110px;border-radius:50%;z-index:1;background:radial-gradient(circle at 35% 35%,#fffbe8,#e8d9a8 65%,#c9b985);box-shadow:0 0 100px 40px rgba(235,220,160,.28);transform:translateY(70vh);opacity:0;transition:transform 4.5s cubic-bezier(.16,.8,.3,1),opacity 2s}
+.moon.up{transform:none;opacity:1}
+.ink{position:fixed;width:24px;height:24px;margin:-12px;border-radius:50%;background:var(--accent);z-index:24;pointer-events:none;opacity:0;animation:ink 2.2s cubic-bezier(.3,.6,.2,1) forwards;will-change:transform}
+@keyframes ink{20%{opacity:.75}to{transform:scale(var(--s));opacity:0}}
+.fw{position:fixed;font-family:Cinzel,serif;font-size:14px;letter-spacing:.2em;color:var(--accent);z-index:3;pointer-events:none;animation:flt 12s ease-out forwards;white-space:nowrap}
+@keyframes flt{from{transform:translateY(0);opacity:0}15%{opacity:.85}to{transform:translateY(-90vh);opacity:0}}
+.clk{margin-top:14px;font-family:Inter,sans-serif;font-size:12px;letter-spacing:.2em;color:var(--mute);cursor:pointer;opacity:0;animation:in .8s .9s forwards}
+
+button:active{transform:scale(.94)}
+#whisper{top:auto;bottom:calc(10vh + env(safe-area-inset-bottom,0px));width:auto;max-width:min(88vw,500px);padding:16px 26px;background:var(--card);border:1px solid var(--accent);border-radius:18px;font-size:clamp(18px,4vw,23px);line-height:1.4;box-shadow:0 20px 60px -20px var(--accent);text-shadow:none;transform:translate(-50%,16px)}
+#whisper.on{transform:translate(-50%,0)}
+#whisper.mid{top:34%;bottom:auto}
+.wsub{display:block;font:400 10px Inter,sans-serif;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:6px;font-style:normal}
+.clkw{position:relative;display:inline-block;margin-top:18px}
+.clk{margin:0;padding:9px 20px;border:1px solid var(--line);border-radius:22px;background:var(--card);color:var(--ink);transition:border-color .2s}
+.clk:hover{border-color:var(--accent)}
+.pop{position:absolute;top:calc(100% + 14px);left:50%;transform:translateX(-50%);width:min(88vw,330px);padding:16px 18px;background:var(--card);border:1px solid var(--accent);border-radius:16px;box-shadow:0 24px 60px -24px var(--accent);text-align:left;z-index:12;animation:popin .3s cubic-bezier(.2,.9,.3,1.2)}
+.pop:before{content:'';position:absolute;top:-8px;left:50%;margin-left:-7px;width:14px;height:14px;background:var(--card);border-left:1px solid var(--accent);border-top:1px solid var(--accent);transform:rotate(45deg)}
+@keyframes popin{from{opacity:0;transform:translate(-50%,-8px) scale(.96)}}
+.pop h5{margin:0 0 8px;font:400 10px Inter,sans-serif;letter-spacing:.3em;text-transform:uppercase;color:var(--accent)}
+.pop div{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-bottom:1px dotted var(--line);font:400 13px Inter,sans-serif;letter-spacing:.03em;cursor:pointer;letter-spacing:.03em;transition:color .2s}
+.pop div:hover,.pop div.me{color:var(--accent)}
+.pop small{display:block;margin-top:9px;font:300 11px Inter,sans-serif;color:var(--mute);letter-spacing:.04em}
+#panel{position:fixed;inset:0;z-index:40;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.5)}
+#panel.on{display:flex}
+.pbox{width:min(90vw,440px);max-height:82vh;overflow:auto;padding:26px;background:var(--card);border:1px solid var(--accent);border-radius:20px;box-shadow:0 30px 80px -30px var(--accent);animation:in .35s forwards}
+.pr{display:flex;gap:12px;padding:9px 0;border-bottom:1px dotted var(--line);font-size:18px;line-height:1.35}
+.pr b{font-weight:400;color:var(--accent);min-width:16px}
+.pr.no{color:var(--mute);font-style:italic}
+#hp{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:16}
+#hp.bump{animation:bump .6s}
+@keyframes bump{40%{transform:scale(1.4);color:var(--accent);border-color:var(--accent)}}
+.card{opacity:1;animation:cin .6s both;animation-delay:calc(var(--i)*.05s);transform:perspective(700px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg))}
+.card:hover{transform:perspective(700px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(-6px)}
+@keyframes cin{from{opacity:0;translate:0 26px}to{opacity:1;translate:0 0}}
+.card:after{content:'';position:absolute;inset:0;pointer-events:none;border-radius:inherit;background:radial-gradient(200px circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.28),transparent 65%);opacity:0;transition:opacity .3s}
+.card:hover:after{opacity:1}
+.ln{opacity:0;transform:none;animation:wr .95s cubic-bezier(.3,.7,.2,1) forwards;animation-delay:calc(var(--i)*.16s + .1s)}
+@keyframes wr{from{opacity:0;clip-path:inset(-10% 100% -10% 0);transform:translateY(6px)}to{opacity:1;clip-path:inset(-10% 0 -10% 0)}}
+.hero h1 span{animation:sp .8s cubic-bezier(.34,1.56,.64,1) forwards;animation-delay:calc(var(--d)*.07s + .05s)}
+@keyframes sp{from{opacity:0;transform:translateY(40px) scale(.8)}to{opacity:1;transform:none}}
+.rl{height:1px;width:0;background:var(--accent);margin:18px auto 2px;animation:rl 1s .6s cubic-bezier(.2,.8,.2,1) forwards}
+@keyframes rl{to{width:140px}}
+#app.out{opacity:0;transform:translate3d(calc(var(--d,0)*-44px),calc((1 - var(--d,0)*var(--d,0))*10px),0)}
+@keyframes ent{from{opacity:0;transform:translate3d(calc(var(--d,0)*44px),calc((1 - var(--d,0)*var(--d,0))*12px),0)}}
+.moon{left:auto;right:7vw;margin-left:0;top:12vh;width:92px;height:92px}
+@media(max-width:600px){.moon{width:60px;height:60px;right:6vw;top:14vh}.pbox{padding:20px}}
+@media(max-width:600px){nav{padding-left:14px;padding-right:12px}#brand{font-size:0;letter-spacing:0}#brand i{font-size:18px}.tools{flex-wrap:nowrap;gap:4px}button{padding:6px 10px;font-size:11px}.clk{font-size:11px;letter-spacing:.06em;padding:8px 12px}main{padding-left:16px;padding-right:16px}#hp{opacity:.85;padding:5px 10px}}
+.pop p{margin:0;text-align:center}.pbig{font:400 34px Cinzel,Georgia,serif;letter-spacing:.06em}.pzn{font:400 12px Inter,sans-serif;letter-spacing:.12em;color:var(--mute);margin-top:2px!important}.pph{font:400 12px Inter,sans-serif;letter-spacing:.06em;color:var(--accent);margin:8px 0 12px!important;white-space:pre}.pop h5{margin:14px 0 2px}.pl{color:var(--ink)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+button,.card,.pn div{min-height:36px}
+.ed input[type=password]{width:100%;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:13px 15px;font:inherit;font-size:20px;outline:none}
+.lg{max-width:380px;margin-top:10vh}.msg{color:var(--accent);font-style:italic;min-height:1.6em;margin-top:10px}
+.errbox{text-align:center;padding:90px 10px;color:var(--mute);font-style:italic;font-size:22px}
+@media(max-width:600px){.tools{flex-wrap:wrap!important}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+.pph{white-space:normal;line-height:1.5}
+.psun{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;font:400 12px Inter,sans-serif;letter-spacing:.06em;color:var(--mute);margin:-6px 0 12px!important}
+.pop{max-width:calc(100vw - 24px);overflow-wrap:anywhere}
+.pop div span:first-child{min-width:0}
+.pl.loc{border:1px solid var(--accent);border-radius:12px;padding:10px 12px;margin:6px 0;color:var(--accent)}
+#pt{-webkit-touch-callout:none;user-select:none;-webkit-user-select:none}
+button,.card,.chip{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+@media(pointer:coarse){button{min-height:44px}.pop div{padding:11px 0}}
+@media(hover:none){.card:hover{transform:perspective(700px)}}
+@media(max-height:500px) and (orientation:landscape){main{padding-top:70px}.hero{min-height:auto;padding:36px 0}.hero h1{font-size:clamp(34px,10vh,72px)}.moon{width:50px;height:50px}.pop{max-height:70vh;overflow:auto}}
+@media(min-width:1800px){body{zoom:1.3}}
+@media(min-width:2600px){body{zoom:1.8}}
+.card:focus-visible,.pn div:focus-visible,.chip:focus-visible,.pop div:focus-visible,#hp:focus-visible{outline:3px solid var(--accent);outline-offset:4px}
+.card:focus-visible{transform:perspective(700px) translateY(-6px)}
+.hero .pop p{font-style:normal;opacity:1;animation:none;font-size:inherit;margin:0;color:inherit;white-space:normal}
+.hero .pop p.pbig{font:400 34px Cinzel,Georgia,serif;letter-spacing:.06em}
+.hero .pop p.pzn{font:400 12px Inter,sans-serif;letter-spacing:.12em;color:var(--mute);margin-top:2px}
+.hero .pop p.pph{font:400 12px Inter,sans-serif;letter-spacing:.06em;color:var(--accent);margin:8px 0 4px}
+.hero .pop p.psun{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;font:400 12px Inter,sans-serif;letter-spacing:.06em;color:var(--mute);margin:0 0 12px}
+</style>
+</head>
+<body>
+<div id="aura"></div><div id="glow"></div>
+<canvas id="amb"></canvas><div id="bar"></div>
+<nav><span id="brand" onclick="act.brand()" role="button" tabindex="0">SNIPXR <i>✦</i></span><span class="tools" id="tools"></span></nav>
+<div id="app"></div>
+<div id="fx"></div>
+<div id="whisper"></div><button id="hp" onclick="act.hidden()">✦ 0/14</button><div id="panel" onclick="this.classList.remove('on')"></div>
+<noscript><p style="text-align:center;padding:40px">POEMS needs JavaScript to turn its pages.</p></noscript>
+<script>
+/* App core: state, data loading from poems.json, GitHub helpers, boot. */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const ls={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
+let S={title:'POEMS',tagline:'by snipxr',poems:[],updated_at:''},view='toc',cur=null,eid=null,author=false,PV=null,WK=null,BASE='',ERR='',LERR='',dirty=false,PENDING='';
+let found=new Set(),clicks=0,flt='All',mx=innerWidth/2,my=innerHeight/2;
+function guessRepo(){const h=location.hostname,p=location.pathname.split('/').filter(Boolean);if(h.endsWith('.github.io')){const o=h.split('.')[0];return o+'/'+(p[0]&&!/\./.test(p[0])?p[0]:h)}return''}
+let TOKEN=ls.get('gh_token')||'',REPO=ls.get('gh_repo')||guessRepo(),BR='main';
+const live=()=>S.poems.filter(p=>p.published);
+async function gh(path,opt={},tok){const h={Accept:'application/vnd.github+json',Authorization:'Bearer '+(tok||TOKEN)};if(opt.body)h['Content-Type']='application/json';
+let r;try{r=await fetch('https://api.github.com'+path,{method:opt.method||'GET',headers:h,body:opt.body?JSON.stringify(opt.body):undefined,cache:'no-store'})}catch(e){const x=new Error('Cannot reach GitHub. Check your internet.');x.status=0;throw x}
+const j=await r.json().catch(()=>null);if(!r.ok){const x=new Error((j&&j.message)||'GitHub error '+r.status);x.status=r.status;throw x}return j}
+const b64=s=>{const b=new TextEncoder().encode(s);let t='';b.forEach(c=>t+=String.fromCharCode(c));return btoa(t)};
+async function commit(data){let sha;try{sha=(await gh(`/repos/${REPO}/contents/poems.json?ref=${BR}`)).sha}catch(e){if(e.status!==404)throw e}
+const body={message:'Update poems',content:b64(JSON.stringify(data,null,1)),branch:BR};if(sha)body.sha=sha;
+await gh(`/repos/${REPO}/contents/poems.json`,{method:'PUT',body})}
+async function load(first){try{const r=await fetch('poems.json?t='+Date.now(),{cache:'no-store'});let j={poems:[]};
+if(r.status!==404){if(!r.ok)throw new Error('The book file could not be read ('+r.status+').');j=await r.json()}
+if(PENDING&&(j.updated_at||'')<PENDING){ERR='';return}PENDING='';
+if(!first&&!ERR&&(j.updated_at||'')===S.updated_at)return;
+S={title:String(j.title||'POEMS').slice(0,100),tagline:String(j.tagline||'by snipxr').slice(0,200),updated_at:j.updated_at||'',
+poems:(Array.isArray(j.poems)?j.poems:[]).map(p=>({id:String(p.id).replace(/[^\w-]/g,''),title:String(p.title||'Untitled'),collection:String(p.collection||''),body:String(p.body||''),published:true}))};
+ERR='';if(first||view==='toc')render()}
+catch(e){if(first||!S.poems.length){ERR=(location.protocol==='file:'?'Open this site from its GitHub Pages address; a file opened straight from a computer cannot load the poems. ':'The book could not be reached. ')+e.message;if(view==='toc')render()}}}
+async function checkAuth(){if(!TOKEN||!REPO)return;try{const j=await gh('/repos/'+REPO);if(j.permissions&&j.permissions.push){author=true;BR=j.default_branch||'main'}else{ls.del('gh_token');TOKEN=''}}catch(e){if(e.status===401){ls.del('gh_token');TOKEN=''}}}
+const act={
+brand(){if(++act.n>=7){act.n=0;explode(W/2,H*.5,45);whisper('You found the author’s little door.');setTimeout(()=>act.desk(),1200)}act.home()},n:0,
+world(ev){ev&&ev.stopPropagation();const w=$('#clkw'),o=w.querySelector('.pop');if(o){closePop();return}
+const Z=[['America/Los_Angeles','Los Angeles · USA'],['America/New_York','New York · USA'],['Europe/London','London · UK'],['Asia/Dubai','Dubai · UAE'],['Indian/Maldives','Maldives'],['Asia/Tokyo','Tokyo · Japan'],['Australia/Sydney','Sydney · Australia']],here=zone();
+let h=`<p class="pbig" id="pc"></p><p class="pzn" id="pzn"></p><p class="pph" id="pph"></p><p class="psun" id="psun"></p><div class="pl loc" onclick="askLoc()"><span>◎ <span id="pls"></span></span><span>›</span></div><div class="pl" onclick="toggleSky()"><span>Sky follows this place</span><span id="skyv">${SKY?'on':'off'}</span></div><h5>Around the world</h5>`;
+Z.forEach(([z,n])=>{h+=`<div class="${z===here?'me':''}" onclick="ZO='${z}';SC.k='';tick();closePop()"><span>${n}</span><span class="ct" data-z="${z}"></span></div>`});
+if(ZO)h+=`<div onclick="ZO=null;SC.k='';tick();closePop()"><span>↩ Back to my own time</span><span></span></div>`;
+const p=document.createElement('div');p.className='pop';p.innerHTML=h+'<small>Tap a city to preview the page as if opened there.</small>';w.appendChild(p);setLS();tick();if(!LOC&&!ZO&&!window.__asked&&navigator.geolocation){window.__asked=1;askLoc()}},
+hidden(){const p=$('#panel');p.innerHTML=`<div class="pbox" onclick="event.stopPropagation()"><div class="banner">The hidden page</div><p style="text-align:center;color:var(--mute);font-style:italic;margin:6px 0 16px">${TOT} secrets are woven into this book. Each one answers to something you can do.</p>${Object.keys(E).map(k=>found.has(k)?`<div class="pr"><b>✦</b><span>${E[k][0]}</span></div>`:`<div class="pr no"><b>·</b><span>${E[k][1]}</span></div>`).join('')}<div class="row" style="justify-content:center"><button onclick="$('#panel').classList.remove('on')">Close</button></div></div>`;p.classList.add('on')},
+home(){go(()=>{view='toc';render()})},
+open(id){const ps=live(),d=view==='poem'?(ps.findIndex(p=>p.id===id)>ps.findIndex(p=>p.id===cur)?1:-1):0;go(()=>{cur=id;view='poem';render()},d)},
+rand(){const ps=live();if(ps.length)act.open(ps[Math.random()*ps.length|0].id)},
+theme(){const r=document.documentElement,dk=getComputedStyle(r).getPropertyValue('--bg').trim()==='#0f1117';document.body.classList.remove('night');r.dataset.theme=dk?'light':'dark';try{localStorage.setItem('th',r.dataset.theme)}catch(e){}},
+ttl(){if(++clicks>=5){clicks=0;for(let i=0;i<6;i++){const d=document.createElement('div');d.className='ink';d.style.left=(30+Math.random()*40)+'vw';d.style.top=(30+Math.random()*40)+'vh';d.style.setProperty('--s',60+Math.random()*60);d.style.animationDelay=i*.12+'s';document.body.appendChild(d);setTimeout(()=>d.remove(),3200)}setTimeout(()=>egg('ink','The ink remembers every hand that held it.',4500),700)}},
+dbl(){const sp=[...document.querySelectorAll('#pt span')];sp.forEach((s,i)=>{s.style.transitionDelay=i*.03+'s';s.style.transform=`translate(${(Math.random()-.5)*60}px,${-60-Math.random()*140}px) rotate(${(Math.random()-.5)*90}deg)`});setTimeout(()=>sp.forEach(s=>s.style.transform=''),650);setTimeout(()=>sp.forEach(s=>s.style.transitionDelay=''),1800);egg('scatter','Every poem is a door left ajar.')},
+star(){shoot();setTimeout(shoot,500);whisper('Make a wish.',3200)}};
+document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches&&e.target.matches('.card,.pn div,#brand,footer i')){e.preventDefault();e.target.click()}});
+setInterval(()=>{if(!document.hidden)load()},60000);
+addEventListener('focus',()=>load());document.addEventListener('visibilitychange',()=>{if(!document.hidden)load()});
+async function boot(){hp();await Promise.all([load(true),checkAuth()]);render();
+try{navigator.permissions&&navigator.permissions.query({name:'geolocation'}).then(q=>{if(q.state==='granted')askLoc()}).catch(()=>{})}catch(e){}
+setInterval(()=>{if(LOC)askLoc()},300000)}
+document.addEventListener('DOMContentLoaded',boot);
+
+</script>
+<script>
+/* Clock, timezone, optional geolocation, sunrise/sunset. Coordinates stay in memory only. */
+let ZO=null,LOC=null,LS='',SKY=false,skySt=null;
+try{SKY=localStorage.getItem('sky')==='1'}catch(e){}
+const CITIES=[['Malé','Maldives','Indian/Maldives',4.18,73.51],['Los Angeles','USA','America/Los_Angeles',34.05,-118.24],['San Francisco','USA','America/Los_Angeles',37.77,-122.42],['Seattle','USA','America/Los_Angeles',47.61,-122.33],['Phoenix','USA','America/Phoenix',33.45,-112.07],['Denver','USA','America/Denver',39.74,-104.99],['Chicago','USA','America/Chicago',41.88,-87.63],['Dallas','USA','America/Chicago',32.78,-96.8],['Houston','USA','America/Chicago',29.76,-95.37],['New York','USA','America/New_York',40.71,-74.01],['Atlanta','USA','America/New_York',33.75,-84.39],['Miami','USA','America/New_York',25.76,-80.19],['Anchorage','USA','America/Anchorage',61.22,-149.9],['Honolulu','USA','Pacific/Honolulu',21.31,-157.86],['Toronto','Canada','America/Toronto',43.65,-79.38],['Vancouver','Canada','America/Vancouver',49.28,-123.12],['Mexico City','Mexico','America/Mexico_City',19.43,-99.13],['São Paulo','Brazil','America/Sao_Paulo',-23.55,-46.63],['Buenos Aires','Argentina','America/Argentina/Buenos_Aires',-34.6,-58.38],['London','UK','Europe/London',51.51,-.13],['Paris','France','Europe/Paris',48.86,2.35],['Berlin','Germany','Europe/Berlin',52.52,13.4],['Madrid','Spain','Europe/Madrid',40.42,-3.7],['Rome','Italy','Europe/Rome',41.9,12.5],['Istanbul','Türkiye','Europe/Istanbul',41.01,28.98],['Moscow','Russia','Europe/Moscow',55.76,37.62],['Cairo','Egypt','Africa/Cairo',30.04,31.24],['Lagos','Nigeria','Africa/Lagos',6.52,3.38],['Nairobi','Kenya','Africa/Nairobi',-1.29,36.82],['Johannesburg','South Africa','Africa/Johannesburg',-26.2,28.05],['Dubai','UAE','Asia/Dubai',25.2,55.27],['Riyadh','Saudi Arabia','Asia/Riyadh',24.71,46.68],['Karachi','Pakistan','Asia/Karachi',24.86,67.01],['Delhi','India','Asia/Kolkata',28.61,77.21],['Mumbai','India','Asia/Kolkata',19.08,72.88],['Colombo','Sri Lanka','Asia/Colombo',6.93,79.86],['Dhaka','Bangladesh','Asia/Dhaka',23.81,90.41],['Bangkok','Thailand','Asia/Bangkok',13.76,100.5],['Singapore','Singapore','Asia/Singapore',1.35,103.82],['Jakarta','Indonesia','Asia/Jakarta',-6.21,106.85],['Hong Kong','China','Asia/Hong_Kong',22.32,114.17],['Beijing','China','Asia/Shanghai',39.9,116.41],['Seoul','South Korea','Asia/Seoul',37.57,126.98],['Tokyo','Japan','Asia/Tokyo',35.68,139.69],['Sydney','Australia','Australia/Sydney',-33.87,151.21],['Auckland','New Zealand','Pacific/Auckland',-36.85,174.76]];
+const hav=(a,b,c,d)=>{const r=Math.PI/180,x=Math.sin((c-a)*r/2)**2+Math.cos(a*r)*Math.cos(c*r)*Math.sin((d-b)*r/2)**2;return 12742*Math.asin(Math.sqrt(x))};
+function near(la,lo){let b=null,bd=1e9;for(const c of CITIES){const d=hav(la,lo,c[3],c[4]);if(d<bd){bd=d;b=c}}return bd<250?b:null}
+function devZone(){try{return Intl.DateTimeFormat().resolvedOptions().timeZone||'UTC'}catch(e){return 'UTC'}}
+function zone(){return ZO||(LOC&&LOC.zone)||devZone()}
+function coords(){if(ZO){const c=CITIES.find(c=>c[2]===ZO);return c&&{lat:c[3],lng:c[4]}}if(LOC)return LOC;const c=CITIES.find(c=>c[2]===devZone());return c&&{lat:c[3],lng:c[4]}}
+function alt(la,lo,t){const r=Math.PI/180,n=t/864e5+2440587.5-2451545,M=(357.5291+.98560028*n)%360,C=1.9148*Math.sin(M*r)+.02*Math.sin(2*M*r),L=(M+C+180+102.9372)%360*r,e=23.4397*r,dec=Math.asin(Math.sin(L)*Math.sin(e)),ra=Math.atan2(Math.cos(e)*Math.sin(L),Math.cos(L)),H=((280.46061837+360.98564736629*n+lo)%360)*r-ra;return{a:Math.asin(Math.sin(la*r)*Math.sin(dec)+Math.cos(la*r)*Math.cos(dec)*Math.cos(H))/r,m:Math.sin(H)<0}}
+function phase(){const c=coords();if(c){const s=alt(c.lat,c.lng,Date.now()),a=s.a;if(a>10)return['☀','Daylight','day'];if(a>-4)return s.m?['◑','Sunrise glow','rise']:['◑','Golden hour','golden'];if(a>-12)return s.m?['◐','Dawn','dawn']:['◐','Dusk','dusk'];return['☾','Night','night']}
+const h=lhr();return h<5||h>=21?['☾','Night','night']:h<7?['◐','Dawn','dawn']:h<17?['☀','Daylight','day']:h<19?['◑','Golden hour','golden']:['◐','Dusk','dusk']}
+let SC={k:'',v:''};
+function sunTxt(){const c=coords();if(!c)return'';const z=zone(),n=Date.now(),k=z+Math.floor(n/6e4);if(SC.k===k)return SC.v;let up='—',dn='—',pv=alt(c.lat,c.lng,n-432e5).a;const f=t=>new Intl.DateTimeFormat([],{hour:'2-digit',minute:'2-digit',timeZone:z}).format(t);
+for(let t=n-432e5+3e5;t<=n+432e5;t+=3e5){const a=alt(c.lat,c.lng,t).a;if(pv<-.83&&a>=-.83)up=f(t);if(pv>=-.83&&a<-.83)dn=f(t);pv=a}
+SC={k,v:`↑ ${up}   ↓ ${dn}`};return SC.v}
+const fmt=z=>{try{return new Intl.DateTimeFormat([],{hour:'2-digit',minute:'2-digit',timeZone:z}).format(new Date())}catch(e){return''}};
+function setLS(v){if(v!==undefined)LS=v;const e=$('#pls');if(e)e.textContent=LS||'Use my location'}
+function askLoc(){if(!navigator.geolocation){setLS('Location unavailable — using device time zone');return}
+setLS('Locating…');navigator.geolocation.getCurrentPosition(p=>{const la=p.coords.latitude,lo=p.coords.longitude,c=near(la,lo);LOC={lat:la,lng:lo,zone:c&&c[2],city:c&&c[0],cc:c&&c[1]};SC.k='';setLS('Located · '+place(zone()));tick()},e=>setLS(e&&e.code===1?'Location blocked — using device time zone':'Location unavailable here — using device time zone'),{timeout:9000,maximumAge:300000})}
+function toggleSky(){SKY=!SKY;skySt=null;try{localStorage.setItem('sky',SKY?'1':'0')}catch(e){}if(!SKY)document.body.classList.remove('night');const e=$('#skyv');if(e)e.textContent=SKY?'on':'off';tick()}
+const nice=z=>z.split('/').pop().replace(/_/g,' ');
+const US=/^(America\/(New_York|Chicago|Denver|Los_Angeles|Phoenix|Anchorage|Detroit|Boise|Juneau|Indiana\/.*|Kentucky\/.*|North_Dakota\/.*)|Pacific\/Honolulu|US\/.*)$/;
+const CC={'Indian/Maldives':'Maldives','Europe/London':'UK','Asia/Dubai':'UAE','Asia/Tokyo':'Japan','Australia/Sydney':'Australia','Asia/Kolkata':'India','Asia/Colombo':'Sri Lanka','Asia/Singapore':'Singapore','Europe/Paris':'France','Europe/Berlin':'Germany','America/Toronto':'Canada','America/Vancouver':'Canada','Asia/Karachi':'Pakistan','Asia/Dhaka':'Bangladesh'};
+const place=z=>{if(!ZO&&LOC&&LOC.city&&LOC.zone===z)return LOC.city===LOC.cc?LOC.city:LOC.city+', '+LOC.cc;const c=CITIES.find(c=>c[2]===z);if(c)return c[0]===c[1]?c[0]:c[0]+', '+c[1];const n=nice(z),k=US.test(z)?'USA':CC[z]||'';return k&&k!==n?`${n}, ${k}`:n};
+function lhr(){try{return +new Intl.DateTimeFormat('en',{hour:'numeric',hour12:false,timeZone:zone()}).format(new Date())%24}catch(e){return new Date().getHours()}}
+function tick(){const z=zone(),d=new Date(),ph=phase();let t,o='';try{t=new Intl.DateTimeFormat([],{hour:'2-digit',minute:'2-digit',second:'2-digit',timeZone:z}).format(d);o=(new Intl.DateTimeFormat('en',{timeZoneName:'short',timeZone:z}).formatToParts(d).find(p=>p.type==='timeZoneName')||{}).value||''}catch(e){t=d.toLocaleTimeString()}
+const el=$('#clk');if(el)el.textContent=`${(h=>h<5?'Still night':h<12?'Good morning':h<17?'Good afternoon':h<21?'Good evening':'Good night')(lhr())} · ${t} · ${place(z)}${o&&o!==place(z)?' '+o:''} ▾`;
+const big=$('#pc');if(big){big.textContent=t;$('#pzn').textContent=`${place(z)} · ${o}`;$('#pph').textContent=`${ph[0]} ${ph[1]}`;const sx=sunTxt().split('   '),ps=$('#psun');if(ps)ps.innerHTML=sx[0]?`<span>${esc(sx[0])}</span><span>${esc(sx[1]||'')}</span>`:'';document.querySelectorAll('.ct').forEach(e=>e.textContent=fmt(e.dataset.z))}
+if(SKY){const dk=['night','dusk','dawn'].includes(ph[2]);if(dk!==skySt){skySt=dk;if(dk)night();else document.body.classList.remove('night')}}}
+setInterval(tick,1000);
+function closePop(){const o=document.querySelector('.pop');if(o){o.remove();egg('world','The page keeps every hour at once.')}}
+
+</script>
+<script>
+/* Reader: navigation, index, poem pages. Poem text is always escaped (plain text). */
+function tools(){let h='';
+if(view!=='toc'&&!PV)h+=`<button onclick="act.home()">Index</button>`;
+if(PV)h+=`<button class="pri" onclick="act.back()">Back to desk</button>`;
+if(live().length&&!PV&&view!=='edit'&&view!=='login')h+=`<button onclick="act.rand()">Wander</button>`;
+if(author&&view==='edit'&&eid!==null)h+=`<button onclick="act.pv()">Preview</button>`;
+if(!PV)h+=`<button ${view==='edit'||view==='login'?'class="pri"':''} onclick="act.desk()">Desk</button>`;
+$('#tools').innerHTML=h+`<button onclick="act.theme()" aria-label="Toggle light and dark theme" title="Theme">◐</button><button id="snd" onclick="toggleSound()" aria-label="Toggle ambient sound" title="Sound">♪</button>`}
+function render(){tools();$('#app').innerHTML=view==='toc'?toc():view==='poem'?poemV():view==='login'?loginV():editor();scrollTo(0,0);upd()}
+function go(f,d=0){const a=$('#app');a.style.setProperty('--d',d);a.classList.add('out');setTimeout(()=>{f();a.classList.remove('out');a.style.animation='none';void a.offsetWidth;a.style.animation='ent .38s cubic-bezier(.2,.8,.2,1)'},150)}
+function toc(){if(ERR)return `<main><div class="errbox">${esc(ERR)}<br><br><button onclick="load(true)">Try again</button></div></main>`;const ps=live(),cols=['All',...new Set(ps.map(p=>p.collection||'Poems'))];
+const L=[...S.title].map((c,i)=>`<span style="--d:${Math.abs(i-(S.title.length-1)/2)}">${c===' '?'&nbsp;':esc(c)}</span>`).join('');
+let h=`<main><section class="hero"><h1 onclick="act.ttl()">${L}</h1><div class="rl"></div><p>${esc(S.tagline)}</p><div class="clkw" id="clkw"><div class="clk" id="clk" onclick="act.world(event)"></div></div><div class="cue" onclick="$('#lib').scrollIntoView({behavior:'smooth'})">Read ↓</div></section><section id="lib">`;
+if(cols.length>2)h+=`<div class="chips">${cols.map(c=>`<button class="chip ${c===flt?'on':''}" data-c="${esc(c)}" onclick="flt=this.dataset.c;render();$('#lib').scrollIntoView()">${esc(c)}</button>`).join('')}</div>`;
+const v=ps.filter(p=>flt==='All'||(p.collection||'Poems')===flt);
+h+=v.length?`<div class="grid">${v.map((p,i)=>`<div class="card" tabindex="0" role="button" style="--i:${i}" onclick="act.open('${p.id}')"><b>${ps.indexOf(p)+1}</b><small>${esc(p.collection||'Poem')}</small><h4>${esc(p.title)}</h4><p>${esc((p.body||'').split('\n')[0])}</p></div>`).join('')}</div>`:'<div class="empty">The pages are still being written.</div>';
+return h+`${foot()}</section></main>`}
+function foot(){return `<footer>written slowly &nbsp;<i onclick="act.star()" role="button" tabindex="0" aria-label="A small star">✦</i></footer>`}
+function poemV(){const ps=PV?[PV]:live(),i=PV?0:ps.findIndex(p=>p.id===cur),p=ps[i];if(!p){view='toc';return toc()}
+const ln=(p.body||'').split('\n').map((l,k)=>`<span class="ln" style="--i:${k}">${esc(l)||'&nbsp;'}</span>`).join('');
+const nb=(q,l)=>q?`<div tabindex="0" role="button" onclick="act.open('${q.id}')"><small>${l}</small><span>${esc(q.title)}</span></div>`:'<div style="visibility:hidden"></div>';
+return `<main><article class="poem">${PV?'<div class="banner">preview · not public</div>':''}<small>${esc(p.collection||'')}${p.collection?' · ':''}${i+1} / ${ps.length}</small><h2 id="pt" ondblclick="act.dbl()">${[...p.title].map(c=>`<span>${c===' '?'&nbsp;':esc(c)}</span>`).join('')}</h2><div class="orn">✦ ✦ ✦</div>${ln}<div class="pn">${nb(ps[i-1],'← Previous')}${nb(ps[i+1],'Next →')}</div>${foot()}</article></main>`}
+
+</script>
+<script>
+/* Author Desk. The lock is GitHub itself: only a token that can write to your repository can publish. */
+const sig=()=>JSON.stringify([WK.title,WK.tagline,WK.poems.filter(p=>p.published).map(p=>[p.id,p.title,p.collection,p.body])]);
+function openWork(){const s=ls.get('pw_work');if(s){try{const w=JSON.parse(s);if(w&&w.data&&w.dirty){WK=w.data;BASE=w.base;dirty=true;return}}catch(e){}}
+let d=[];try{d=JSON.parse(ls.get('pw_drafts')||'[]')}catch(e){}
+WK={title:S.title,tagline:S.tagline,poems:[...S.poems.map(p=>({...p,published:true})),...d.map(p=>({...p,published:false}))]};BASE=sig();dirty=false}
+function persist(){dirty=sig()!==BASE;ls.set('pw_drafts',JSON.stringify(WK.poems.filter(p=>!p.published)));if(dirty)ls.set('pw_work',JSON.stringify({dirty:true,base:BASE,data:WK}));else ls.del('pw_work')}
+function loginV(){return `<main class="ed lg"><div class="banner">author desk</div><form onsubmit="act.login(event)"><label for="rp">Your GitHub repository</label><input type="text" id="rp" placeholder="yourname/poems" value="${esc(REPO)}" autocomplete="off" required><label for="tk">Access token</label><input type="password" id="tk" autocomplete="off" required><div class="row"><button class="pri" type="submit">Unlock the desk</button></div><div class="msg" role="alert">${esc(LERR)}</div></form>
+<details style="margin-top:18px;color:var(--mute);font-size:17px;line-height:1.5"><summary style="cursor:pointer">How do I get a token? (one time, 2 minutes)</summary><ol style="padding-left:20px"><li>On github.com click your picture → <b>Settings</b> → <b>Developer settings</b> → <b>Personal access tokens</b> → <b>Fine-grained tokens</b> → <b>Generate new token</b>.</li><li>Name it <i>poems</i>. Under <b>Repository access</b> choose <b>Only select repositories</b> and pick your poems repository.</li><li>Under <b>Repository permissions</b> set <b>Contents</b> to <b>Read and write</b>.</li><li>Press <b>Generate token</b>, copy it (starts with <i>github_pat_</i>) and paste it above. Only your browser keeps it.</li></ol></details></main>`}
+function editor(){let h=`<main class="ed"><div class="banner">the desk · visible only to you</div>`;
+if(eid===null){h+=`<div class="row"><button class="pri" onclick="act.edit('new')">+ New poem</button><button class="pri" ${dirty?'':'style="opacity:.5"'} onclick="act.publish()">${dirty?'Publish to site':'Site is up to date'}</button><button onclick="act.logout()">Log out</button></div>${dirty?'<div class="msg">You have changes that readers cannot see yet. Press “Publish to site”.</div>':''}<label>Book title</label><input type="text" id="bt" maxlength="100" value="${esc(WK.title)}"><label>Tagline</label><input type="text" id="bg" maxlength="200" value="${esc(WK.tagline)}"><div class="row"><button onclick="act.book()">Save title &amp; tagline</button></div><label>Poems · drafts stay private on this device</label>`;
+if(!WK.poems.length)h+='<div class="empty">No poems yet.</div>';
+WK.poems.forEach((p,i)=>{h+=`<div class="item"><div>${esc(p.title)}<br><small>${p.published?'published':'draft (private)'} · ${esc(p.collection||'no collection')}</small></div><div><button aria-label="Move up" onclick="act.mv(${i},-1)">↑</button> <button aria-label="Move down" onclick="act.mv(${i},1)">↓</button> <button onclick="act.edit('${p.id}')">Edit</button></div></div>`})}
+else{const p=eid==='new'?{title:'',collection:'',body:'',published:false}:WK.poems.find(x=>x.id===eid)||{title:'',collection:'',body:'',published:false};
+h+=`<label for="e1">Title</label><input type="text" id="e1" maxlength="200" value="${esc(p.title)}"><label for="e2">Collection</label><input type="text" id="e2" maxlength="100" value="${esc(p.collection)}" placeholder="e.g. Night Poems"><label for="e3">Poem</label><textarea id="e3" maxlength="20000">${esc(p.body)}</textarea><div class="row"><label style="margin:0"><input type="checkbox" id="e4" ${p.published?'checked':''}> published (readers can see it after you press Publish to site)</label></div><div class="row"><button class="pri" onclick="act.keep()">Save</button><button onclick="act.edit()">Cancel</button>${eid==='new'?'':'<button onclick="act.del()">Delete</button>'}</div>`}
+return h+'</main>'}
+const dErr=e=>{if(e.status===401){author=false;TOKEN='';ls.del('gh_token');view='login';LERR='GitHub no longer accepts your token. Unlock again with a new one.';render()}
+else whisper(e.status===403||e.status===404?'GitHub said no. Check the token has Contents: Read and write on this repository.':e.message,5000)};
+Object.assign(act,{
+desk(){go(()=>{if(!author){view='login';LERR='';render();return}if(!WK)openWork();eid=null;view='edit';PV=null;render()})},
+async login(ev){ev.preventDefault();LERR='';const r=$('#rp').value.trim().replace(/^https?:\/\/github\.com\//,'').replace(/\.git$/,'').replace(/\/$/,''),t=$('#tk').value.trim();
+if(!/^[\w.-]+\/[\w.-]+$/.test(r)){LERR='Type the repository like yourname/poems.';return render()}REPO=r;
+try{const j=await gh('/repos/'+r,{},t);if(!(j.permissions&&j.permissions.push)){LERR='That token cannot write to this repository. It needs Contents: Read and write.';return render()}
+TOKEN=t;BR=j.default_branch||'main';ls.set('gh_token',t);ls.set('gh_repo',r);author=true;openWork();eid=null;view='edit';render()}
+catch(e){LERR=e.status===401?'GitHub did not accept that token.':e.status===404?'Repository not found, or the token cannot see it.':e.message;render()}},
+logout(){TOKEN='';ls.del('gh_token');author=false;WK=null;view='toc';render()},
+edit(id){go(()=>{eid=id===undefined?null:id;view='edit';render()})},
+form(){return{title:$('#e1').value,collection:$('#e2').value,body:$('#e3').value,published:$('#e4').checked}},
+keep(){const f=this.form();f.title=f.title.trim();if(!f.title)return whisper('Give the poem a title first.');f.collection=f.collection.trim();f.body=f.body.replace(/\r\n?/g,'\n').replace(/\s+$/,'');
+if(eid==='new')WK.poems.push({id:'p'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),...f});else Object.assign(WK.poems.find(x=>x.id===eid),f);
+persist();eid=null;render();whisper(f.published?'Saved. Press “Publish to site” to make it live.':'Saved as a private draft',3500)},
+del(){if(!confirm('Delete this poem for good? This cannot be undone.'))return;WK.poems=WK.poems.filter(x=>x.id!==eid);persist();eid=null;render()},
+mv(i,d){const j=i+d;if(j<0||j>=WK.poems.length)return;[WK.poems[i],WK.poems[j]]=[WK.poems[j],WK.poems[i]];persist();render()},
+book(){WK.title=($('#bt').value.trim()||'POEMS').slice(0,100);WK.tagline=$('#bg').value.trim().slice(0,200);persist();render();whisper('Saved. Press “Publish to site” to make it live.',3000)},
+async publish(){if(!dirty)return;whisper('Publishing…',9000);try{const data={title:WK.title,tagline:WK.tagline,updated_at:new Date().toISOString(),poems:WK.poems.filter(p=>p.published).map(({id,title,collection,body})=>({id,title,collection,body,published:true}))};
+await commit(data);S={...data,poems:data.poems};PENDING=data.updated_at;BASE=sig();persist();render();whisper('Published ✦ Readers will see it in about a minute.',6000)}catch(e){dErr(e)}},
+pv(){const b=this.form();PV={id:'0',...b};view='poem';render()},
+back(){PV=null;view='edit';render()}
+});
+
+</script>
+<script>
+/* Atmosphere: canvas particles, ambient sound (only after a click), easter eggs. Paused when the tab is hidden. */
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function whisper(t,ms=4200,html){const w=$('#whisper');w.classList.remove('on');w.classList.toggle('mid',/class="sg"/.test(String(t)));if(html)w.innerHTML=t;else w.textContent=t;void w.offsetWidth;w.classList.add('on');clearTimeout(w.t);w.t=setTimeout(()=>w.classList.remove('on'),ms)}
+const E={ink:['ink','Sign the name five times, as if on a letter.'],moon:['moon','Name the lantern of the night.'],rain:['rain','Ask the sky to weep, in four letters.'],sea:['sea','Whisper the water that holds islands.'],fire:['fire','Call the warmth, in four letters.'],wish:['wish','Say what you do to a falling star.'],love:['love','Say the smallest, largest word.'],hours:['hours','Visit at the edge of the day: dawn, dusk, or past midnight.'],world:['world','Ask the clock where the rest of us are.'],still:['stillness','Do nothing. Truly nothing. For forty seconds.'],name:['name','Say the author\'s name.'],light:['light','An old cheat code: up up down down, left right left right, B A.'],scatter:['scatter','Press a poem\'s title twice, quickly.'],wisp:['wonder','Catch the light that wanders.'],shake:['shake','On a phone: shake it like a snow globe.'],hold:['hold','On a phone: press and hold a poem’s title.'],three:['three','On a phone: touch the screen with three fingers at once.']},TOT=Object.keys(E).length;
+try{JSON.parse(localStorage.getItem('fnd')||'[]').forEach(k=>E[k]&&found.add(k))}catch(e){}
+function hp(){const b=$('#hp');if(b)b.textContent=`✦ ${found.size}/${TOT}`}
+function egg(id,msg,ms){if(!E[id]||view==='edit'||view==='login')return;const n=!found.has(id);found.add(id);if(n){try{localStorage.setItem('fnd',JSON.stringify([...found]))}catch(e){}hp();const b=$('#hp');b.classList.remove('bump');void b.offsetWidth;b.classList.add('bump');whisper(`<span class="wsub">Secret ${found.size} of ${TOT} · ${E[id][0]}</span>${msg||''}`,ms||4500,1);if(found.size===TOT)setTimeout(finale,3200)}else if(msg)whisper(msg,ms)}
+function finale(){night();for(let k=0;k<8;k++)setTimeout(()=>rocket(W*(.1+Math.random()*.8)),k*300);whisper('<span class="wsub">Every secret found</span>You read between the lines.',7000,1)}
+/* canvas */
+const cv=$('#amb'),cx=cv.getContext('2d');let W,H,P=[],rainA=0,rainB=0,stars=false;
+function size(){W=cv.width=innerWidth;H=cv.height=innerHeight}addEventListener('resize',size);size();
+const SP={};function spr(h,l=65){const k=h+'_'+l;return SP[k]||(SP[k]=(()=>{const c=document.createElement('canvas');c.width=c.height=32;const g=c.getContext('2d'),r=g.createRadialGradient(16,16,0,16,16,16);r.addColorStop(0,`hsla(${h},100%,${Math.min(95,l+25)}%,1)`);r.addColorStop(.3,`hsla(${h},100%,${l}%,.5)`);r.addColorStop(1,`hsla(${h},100%,${l}%,0)`);g.fillStyle=r;g.fillRect(0,0,32,32);return c})())}
+for(let i=0;i<(RM?0:30);i++)P.push({t:'d',x:Math.random()*W,y:Math.random()*H,r:Math.random()*5+3,vx:(Math.random()-.5)*.2,vy:-Math.random()*.25-.04,a:Math.random()*.5+.2});
+function starfield(){if(stars)return;stars=true;for(let i=0;i<110;i++)P.push({t:'s',x:Math.random()*W,y:Math.random()*H*.85,r:Math.random()*4+2,ph:Math.random()*9})}
+function rocket(x){P.push({t:'r',x,y:H,vx:(Math.random()-.5)*1.2,vy:-(H/62+Math.random()*2),h:Math.random()*360})}
+function explode(x,y,h){for(let i=0;i<46;i++){const a=i/46*6.283,s=(i%2?2.2:4)+Math.random();P.push({t:'x',x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,h:h+(i%3)*25,life:75+Math.random()*25})}}
+function shoot(){P.push({t:'k',x:Math.random()*W*.5+W*.5,y:Math.random()*H*.25,vx:-10,vy:5,life:60})}
+function swarm(x,y){for(let i=0;i<26;i++)P.push({t:'w',x,y,vx:(Math.random()-.5)*8,vy:(Math.random()-.5)*8,ph:Math.random()*9,h:30+Math.random()*40,life:560})}
+function ripple(){P.push({t:'o',x:Math.random()*W,y:H*(.55+Math.random()*.45),r:2,life:40})}
+function loop(){requestAnimationFrame(loop);if(document.hidden)return;cx.clearRect(0,0,W,H);const T=Date.now(),nt=document.body.classList.contains('night'),dh=nt?255:30,dl=nt?75:50,nx=[];
+for(const p of P){if(p.life!==undefined&&--p.life<=0)continue;nx.push(p);
+if(p.t==='d'){p.x+=p.vx+Math.sin(T/3000+p.y)*.1;p.y+=p.vy;if(p.y<-9)p.y=H+9;if(p.x<-9)p.x=W+9;if(p.x>W+9)p.x=-9;cx.globalAlpha=p.a;cx.drawImage(spr(dh,dl),p.x-p.r,p.y-p.r,p.r*2,p.r*2)}
+else if(p.t==='s'){cx.globalAlpha=nt?.25+.75*Math.abs(Math.sin(T/800+p.ph)):0;cx.drawImage(spr(220,80),p.x-p.r,p.y-p.r,p.r*2,p.r*2)}
+else if(p.t==='r'){p.x+=p.vx;p.y+=p.vy;p.vy+=.13;cx.globalAlpha=1;for(let k=0;k<5;k++)cx.drawImage(spr(p.h),p.x-p.vx*k*2-6+k,p.y-p.vy*k*2-6+k,12-k*2,12-k*2);if(p.vy>-1.2){p.life=1;explode(p.x,p.y,p.h)}}
+else if(p.t==='x'){p.x+=p.vx;p.y+=p.vy;p.vx*=.97;p.vy=p.vy*.97+.05;cx.globalAlpha=Math.min(1,p.life/40);cx.drawImage(spr(p.h),p.x-9,p.y-9,18,18)}
+else if(p.t==='k'){p.x+=p.vx;p.y+=p.vy;cx.globalAlpha=Math.min(1,p.life/30);for(let k=0;k<14;k++)cx.drawImage(spr(210,85),p.x-p.vx*k*.9-(14-k)/2,p.y-p.vy*k*.9-(14-k)/2,14-k,14-k)}
+else if(p.t==='w'){p.vx+=(mx-p.x)*.0016+Math.cos(T/400+p.ph)*.12;p.vy+=(my-p.y)*.0016+Math.sin(T/330+p.ph)*.12;p.vx*=.96;p.vy*=.96;p.x+=p.vx;p.y+=p.vy;cx.globalAlpha=Math.min(1,p.life/60);const s=10+4*Math.sin(T/150+p.ph);cx.drawImage(spr(p.h),p.x-s,p.y-s,s*2,s*2)}
+else if(p.t==='o'){p.r+=1.6;cx.globalAlpha=p.life/50;cx.strokeStyle=nt?'#b7a6ff':'#a8552f';cx.beginPath();cx.ellipse(p.x,p.y,p.r,p.r/3,0,0,7);cx.stroke()}}
+P=nx;
+if(rainB>T){const lv=Math.min(1,(rainB-T)/2000,(T-rainA)/800);cx.globalAlpha=.45*lv;cx.strokeStyle=nt?'#b7a6ff':'#7a8aa0';cx.lineWidth=1;cx.beginPath();for(let i=0;i<90;i++){const x=Math.random()*W,y=Math.random()*H;cx.moveTo(x,y);cx.lineTo(x-3,y+20)}cx.stroke();if(Math.random()<.5*lv)ripple()}}
+loop();
+addEventListener('pointermove',e=>{mx=e.clientX;my=e.clientY;$('#glow').style.transform=`translate3d(${mx}px,${my}px,0)`},{passive:true});
+function upd(){const h=document.documentElement;$('#bar').style.transform=`scaleX(${scrollY/Math.max(1,h.scrollHeight-innerHeight)})`}addEventListener('scroll',upd,{passive:true});
+let tf=0;addEventListener('pointermove',e=>{const c=e.target.closest&&e.target.closest('.card');if(!c||tf)return;tf=1;requestAnimationFrame(()=>{tf=0;const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;c.style.setProperty('--rx',((.5-y)*10).toFixed(1)+'deg');c.style.setProperty('--ry',((x-.5)*12).toFixed(1)+'deg');c.style.setProperty('--mx',x*100+'%');c.style.setProperty('--my',y*100+'%')})},{passive:true});
+addEventListener('pointerout',e=>{const c=e.target.closest&&e.target.closest('.card');if(c){c.style.setProperty('--rx','0deg');c.style.setProperty('--ry','0deg')}});
+addEventListener('click',e=>{const o=document.querySelector('.pop');if(o&&!e.target.closest('#clkw'))closePop()});
+/* sound */
+let ac=null,on=false;
+function toggleSound(){try{if(!ac){ac=new (window.AudioContext||window.webkitAudioContext)();const m=ac.createGain();m.gain.value=0;const f=ac.createBiquadFilter();f.type='lowpass';f.frequency.value=600;[110,164.8,220,277.2,329.6].forEach((fr,i)=>{const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=fr;g.gain.value=.05/(i+1);const l=ac.createOscillator(),lg=ac.createGain();l.frequency.value=.04+i*.025;lg.gain.value=.02;l.connect(lg).connect(g.gain);o.connect(g).connect(f);o.start();l.start()});f.connect(m).connect(ac.destination);ac.m=m}
+on=!on;if(on)ac.resume();ac.m.gain.setTargetAtTime(on?.6:0,ac.currentTime,1.2);$('#snd').style.color=on?'var(--accent)':''}catch(e){}}
+/* eggs */
+let buf='',kb=[],idle,moon=null;
+const KON='ArrowUp,ArrowUp,ArrowDown,ArrowDown,ArrowLeft,ArrowRight,ArrowLeft,ArrowRight,b,a';
+function night(){document.body.classList.add('night');starfield()}
+addEventListener('keydown',e=>{if(/INPUT|TEXTAREA|SELECT/.test(e.target.tagName)||e.target.isContentEditable||view==='edit'||view==='login')return;
+if(view==='poem'&&!(kb.length>=4&&KON.startsWith(kb.concat(e.key).join()))){const ps=live(),i=ps.findIndex(p=>p.id===cur);if(e.key==='ArrowRight'&&ps[i+1])act.open(ps[i+1].id);if(e.key==='ArrowLeft'&&ps[i-1])act.open(ps[i-1].id);if(e.key==='Escape')act.home()}
+kb.push(e.key);kb=kb.slice(-10);if(kb.join()===KON){night();for(let k=0;k<9;k++)setTimeout(()=>rocket(W*(.12+Math.random()*.76)),k*380);egg('light','A hundred small lights, just for you.',6000)}
+if(e.key==='?'){act.hidden();return}
+if(e.key.length===1){buf=(buf+e.key.toLowerCase()).slice(-8);
+if(buf.endsWith('moon')){if(moon){moon.classList.remove('up');const m=moon;setTimeout(()=>m.remove(),2200);moon=null;document.body.classList.remove('night')}else{night();moon=document.createElement('div');moon.className='moon';document.body.appendChild(moon);requestAnimationFrame(()=>requestAnimationFrame(()=>moon.classList.add('up')));egg('moon','The moon was here the whole time.',5500);setTimeout(shoot,4200)}}
+if(buf.endsWith('rain')){rainA=Date.now();rainB=rainA+10000;egg('rain','Let it fall. It will pass.')}
+if(buf.endsWith('love')){explode(W/2,H*.45,340);explode(W/2,H*.45,320);setTimeout(()=>explode(W*.3,H*.4,345),300);setTimeout(()=>explode(W*.7,H*.4,330),500);egg('love','Some words are small enough to hold.')}
+if(buf.endsWith('wish')){shoot();setTimeout(shoot,300);setTimeout(shoot,700);egg('wish','Three stars. Choose quietly.')}
+if(buf.endsWith('fire')){for(let i=0;i<70;i++)setTimeout(()=>P.push({t:'x',x:Math.random()*W,y:H+5,vx:(Math.random()-.5)*1.5,vy:-2-Math.random()*3,h:15+Math.random()*30,life:90+Math.random()*60}),i*35);egg('fire','Warm hands, warm words.')}
+if(buf.endsWith('sea')){for(let i=0;i<30;i++)setTimeout(ripple,i*150);egg('sea','The sea keeps every secret softly.')}
+if(buf.endsWith('snipxr')){whisper('<svg viewBox="0 0 440 150" width="min(80vw,440px)"><text class="sg" x="220" y="105" text-anchor="middle">snipxr</text></svg>',5500,1);setTimeout(()=>{explode(W/2,H*.44,35);explode(W/2,H*.44,320)},2300);setTimeout(()=>egg('name','Written by hand, in light.'),3800)}}});
+function wake(){clearTimeout(idle);idle=setTimeout(()=>{const ws=live().flatMap(p=>(p.title+' '+p.body).split(/\s+/)).map(w=>w.replace(/[^\p{L}']/gu,'')).filter(w=>w.length>3);(ws.length?ws:['listen','quiet','light','still']).slice(0,22).forEach((w,i)=>{const d=document.createElement('span');d.className='fw';d.textContent=w;d.style.left=(5+Math.random()*85)+'vw';d.style.top=(55+Math.random()*45)+'vh';d.style.animationDelay=i*.45+'s';document.body.appendChild(d);setTimeout(()=>d.remove(),22000)});egg('still','Stillness has its own words.',4500)},40000)}
+['pointermove','keydown','touchstart','scroll'].forEach(ev=>addEventListener(ev,wake,{passive:true}));wake();
+function wisp(){if($('#fx .wisp')||view==='edit'||view==='login')return;const m=document.createElement('div');m.className='wisp';m.style.left=Math.random()*85+'vw';m.style.top=(15+Math.random()*65)+'vh';
+m.onclick=e=>{const r=m.getBoundingClientRect();swarm(r.left,r.top);m.remove();egg('wisp','It was never alone. Hold still.',5000)};$('#fx').appendChild(m);
+requestAnimationFrame(()=>requestAnimationFrame(()=>{m.style.transform=`translate(${(Math.random()-.5)*60}vw,${(Math.random()-.5)*50}vh)`}));setTimeout(()=>m.remove(),8000)}
+if(!RM){setInterval(()=>{if(Math.random()<.45)wisp()},16000);setTimeout(wisp,7000)}
+{const h=lhr();if(h<4)setTimeout(()=>{night();shoot();egg('hours','The hours between. Welcome.',5000)},2500);else if(h>=5&&h<7)setTimeout(()=>{shoot();egg('hours','The day is still deciding. So are you.',5000)},2500);else if(h>=17&&h<19)setTimeout(()=>{swarm(W/2,H/2);egg('hours','Golden hour. Everything is a little kinder.',5000)},2500)}
+try{const t=localStorage.getItem('th');if(t)document.documentElement.dataset.theme=t}catch(e){}
+
+</script>
+<script>
+/* Phones, tablets and game consoles: swipe, shake, hold, three-finger tap, controller + remote navigation. */
+(function(){
+const typing=e=>(e.target&&(/INPUT|TEXTAREA|SELECT/.test(e.target.tagName)||e.target.isContentEditable))||view==='edit'||view==='login';
+const pads=()=>{try{return navigator.getGamepads?[...navigator.getGamepads()]:[]}catch(e){return[]}};
+let sx=0,sy=0,st=0,ht=null,mot=false,lm=[0,0,0],sh=[],lastShake=0,tickId=null,prev={};
+addEventListener('touchstart',e=>{if(typing(e))return;
+if(e.touches.length===3){night();shoot();setTimeout(shoot,350);setTimeout(shoot,800);egg('three','Three fingers, one sky.')}
+if(e.touches.length===1){sx=e.touches[0].clientX;sy=e.touches[0].clientY;st=Date.now()}},{passive:true});
+addEventListener('touchend',e=>{if(view!=='poem'||PV||!e.changedTouches.length||typing(e))return;const t=e.changedTouches[0],dx=t.clientX-sx,dy=t.clientY-sy;
+if(Date.now()-st<700&&Math.abs(dx)>70&&Math.abs(dy)<55){const ps=live(),i=ps.findIndex(p=>p.id===cur),n=ps[i+(dx<0?1:-1)];if(n)act.open(n.id)}},{passive:true});
+addEventListener('pointerdown',e=>{const t=e.target.closest&&e.target.closest('#pt');if(!t||typing(e))return;const x=e.clientX,y=e.clientY;clearTimeout(ht);ht=setTimeout(()=>{ht=null;swarm(x,y);egg('hold','You held on. So do they.')},900)});
+['pointerup','pointercancel','pointerleave'].forEach(v=>addEventListener(v,()=>{clearTimeout(ht);ht=null}));
+function floatWords(){const ws=live().flatMap(p=>(p.title+' '+p.body).split(/\s+/)).map(w=>w.replace(/[^\p{L}']/gu,'')).filter(w=>w.length>3);(ws.length?ws:['listen','quiet','light','still']).sort(()=>Math.random()-.5).slice(0,18).forEach((w,i)=>{const d=document.createElement('span');d.className='fw';d.textContent=w;d.style.left=(5+Math.random()*85)+'vw';d.style.top=(55+Math.random()*45)+'vh';d.style.animationDelay=i*.15+'s';document.body.appendChild(d);setTimeout(()=>d.remove(),16000)})}
+function onMotion(e){if(view==='edit'||view==='login')return;const a=e.accelerationIncludingGravity;if(!a)return;const c=[a.x||0,a.y||0,a.z||0],d=Math.hypot(c[0]-lm[0],c[1]-lm[1],c[2]-lm[2]);lm=c;const n=Date.now();
+if(d>14){sh=sh.filter(t=>n-t<1000);sh.push(n);if(sh.length>=3&&n-lastShake>4000){lastShake=n;sh=[];explode(innerWidth/2,innerHeight*.4,40);explode(innerWidth/2,innerHeight*.4,200);floatWords();egg('shake','The words came loose.')}}}
+function askMotion(){if(mot)return;const D=window.DeviceMotionEvent;if(D&&typeof D.requestPermission==='function')D.requestPermission().then(s=>{if(s==='granted'){mot=true;addEventListener('devicemotion',onMotion)}}).catch(()=>{})}
+if('DeviceMotionEvent' in window&&typeof DeviceMotionEvent.requestPermission!=='function'){mot=true;addEventListener('devicemotion',onMotion)}
+document.addEventListener('click',e=>{if(e.target.closest&&e.target.closest('#hp,footer i'))askMotion()});
+/* controller / TV-remote focus navigation */
+const FOC='#tools button,#brand,.chip,.card,.cue,.pn div,#hp,footer i,.pl,.pop div,#panel button,.ed button';
+const focusables=()=>[...document.querySelectorAll(FOC)].filter(e=>e.offsetParent!==null&&!e.disabled);
+function moveFocus(dir){const list=focusables(),a=document.activeElement,cur=a&&list.includes(a)?a:null;
+if(!cur){const f=list.find(e=>e.closest('#app'))||list[0];if(f){if(f.tabIndex<0)f.tabIndex=0;f.focus()}return}
+const r=cur.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;let best=null,bs=1e9;
+for(const e of list){if(e===cur)continue;const q=e.getBoundingClientRect(),x=q.left+q.width/2-cx,y=q.top+q.height/2-cy,fwd=dir==='left'?-x:dir==='right'?x:dir==='up'?-y:y;if(fwd<=4)continue;const s=fwd+(dir==='left'||dir==='right'?Math.abs(y):Math.abs(x))*2.2;if(s<bs){bs=s;best=e}}
+if(best){if(best.tabIndex<0)best.tabIndex=0;best.focus();best.scrollIntoView({block:'center',behavior:'smooth'})}else if(dir==='down')scrollBy({top:220,behavior:'smooth'});else if(dir==='up')scrollBy({top:-220,behavior:'smooth'})}
+window.moveFocus=moveFocus;
+addEventListener('keydown',e=>{if(!e.isTrusted||e.key.indexOf('Arrow')!==0||typing(e)||e.altKey||e.ctrlKey||e.metaKey)return;if(view==='poem'&&(e.key==='ArrowLeft'||e.key==='ArrowRight'))return;
+const a=document.activeElement;if(!a||a===document.body||!focusables().includes(a))return;e.preventDefault();moveFocus(e.key.slice(5).toLowerCase())});
+const key=k=>window.dispatchEvent(new KeyboardEvent('keydown',{key:k}));
+function press(k){const map={up:'ArrowUp',down:'ArrowDown',left:'ArrowLeft',right:'ArrowRight',a:'a',b:'b'};if(map[k])key(map[k]);
+if(k==='left'||k==='right'){if(view!=='poem')moveFocus(k)}
+else if(k==='up'||k==='down'){if(view==='poem')scrollBy({top:k==='up'?-240:240,behavior:'smooth'});else moveFocus(k)}
+else if(k==='a'){const a=document.activeElement;if(a&&a!==document.body&&a.click)a.click()}
+else if(k==='b'||k==='start'){if(document.querySelector('.pop'))closePop();else if(view==='poem'||view==='edit')act.home()}}
+function poll(){const p=pads().find(Boolean);if(!p||document.hidden)return;const b=i=>p.buttons[i]&&p.buttons[i].pressed,x=p.axes||[];
+const s={up:b(12)||x[1]<-.6,down:b(13)||x[1]>.6,left:b(14)||x[0]<-.6,right:b(15)||x[0]>.6,a:b(0),b:b(1),start:b(9)};for(const k in s){if(s[k]&&!prev[k])press(k);prev[k]=s[k]}}
+addEventListener('gamepadconnected',()=>{if(!tickId)tickId=setInterval(poll,80);whisper('Controller connected: D-pad moves, A selects, B goes back.',3500)});
+addEventListener('gamepaddisconnected',()=>{if(!pads().some(Boolean)){clearInterval(tickId);tickId=null}});
+if(pads().some(Boolean)&&!tickId)tickId=setInterval(poll,80);
+})();
+</script>
+</body>
+</html>
